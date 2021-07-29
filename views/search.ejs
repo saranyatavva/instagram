@@ -1,0 +1,20 @@
+<%- include('./partials/navbar') %>
+<div class="container">
+    <div class="col-3">
+        
+      </div>
+      <div class="col-6">
+        
+        <ul class="list list-group">
+            
+            <% users.forEach(function(p){ %>
+            <li class="list-group-item"><%=p.name %></li>
+            <% }); %>
+          </ul>
+        <a href="/allpost"><button class="btn btn-primary">Close</button></a>
+    </div>
+      <div class="col-3">
+        
+    </div>
+
+</div>

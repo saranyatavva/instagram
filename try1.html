@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        button{
+  width:200px;
+  height:50px;
+}
+
+button .msg-follow,
+button .msg-following,
+button .msg-unfollow{
+  display: none;
+}
+
+button .msg-follow{
+  display: inline;
+}
+
+button.following .msg-follow{
+  display: none;
+}
+
+button.following .msg-following{
+  display: inline;
+}
+
+button.following:not(.wait):hover .msg-following{
+  display: none;
+}
+
+button.following:not(.wait):hover .msg-unfollow{
+  display: inline;
+}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <button class="follow">
+        <span class="msg-follow">Follow</span>
+        <span class="msg-following">Following</span>
+        <span class="msg-unfollow">Unfollow</span>
+      </button>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</body>
+</html>
+<script>
+   $('button').click(function(){
+  var $this = $(this);
+  $this.toggleClass('following')
+  if($this.is('.following')){
+    $this.addClass('wait');
+  }
+}).on('mouseleave',function(){
+  $(this).removeClass('wait');
+})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-12">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+    </div>
+    <input name="password" type="password" value="" class="input form-control" id="password" placeholder="password" required="true" aria-label="password" aria-describedby="basic-addon1" />
+    <div class="input-group-append">
+      <span class="input-group-text" onclick="password_show_hide();">
+        <i class="fas fa-eye" id="show_eye"></i>
+        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+      </span>
+    </div>
+  </div>
+</div>

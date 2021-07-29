@@ -1,0 +1,92 @@
+<%- include('./partials/navbar') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section class="chat__section" style="margin-top:35px">
+        <div class="brand">
+            <img height="40" src="/wassup.png" alt="">
+            
+        </div>
+        <div class="message__area"></div>
+        <div>
+            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message..."></textarea>
+        </div>
+    </section>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+
+var textarea = document.querySelector('#textarea')
+var messageArea = document.querySelector('.message__area')
+var name = JSON.parse('<%- userhi %>');
+socket.on('output-messages', data => {
+    console.log(data)
+    if (data.length) {
+        data.forEach(message => {
+            if(message.user==name){
+                appendMessage(message,'outgoing')
+            scrollToBottom()
+            }
+            else{
+                appendMessage(message,'incoming')
+            scrollToBottom() 
+            }
+        });
+    }
+})
+textarea.addEventListener('keyup', (e) => {
+    if(e.key === 'Enter') {
+        sendMessage(e.target.value)
+    }
+})
+
+function sendMessage(message) {
+    let msg = {
+        user: name,
+        message: message.trim()
+    }
+    // Append 
+    appendMessage(msg, 'outgoing')
+    textarea.value = ''
+    scrollToBottom()
+
+    // Send to server 
+    socket.emit('message', msg)
+
+}
+
+function appendMessage(msg, type) {
+    let mainDiv = document.createElement('div')
+    let className = type
+    mainDiv.classList.add(className, 'message')
+
+    let markup = `
+        <h4>${msg.user}</h4>
+        <p>${msg.message}</p>
+    `
+    mainDiv.innerHTML = markup
+    messageArea.appendChild(mainDiv)
+}
+
+// Recieve messages 
+
+
+function scrollToBottom() {
+    messageArea.scrollTop = messageArea.scrollHeight
+}
+
+        
+    </script>
+    
+</body>
+
+</html>
